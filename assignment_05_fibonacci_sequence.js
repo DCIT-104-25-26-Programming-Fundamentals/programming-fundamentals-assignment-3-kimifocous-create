@@ -55,3 +55,80 @@
 // =============================================================================
 
 
+const readlineSync = require('readline-sync');
+
+function generateFibonacci(n) {
+  const sequence = [];
+  let a = 0;
+  let b = 1;
+
+  for (let i = 0; i < n; i++) {
+    sequence.push(a);
+    const next = a + b;
+    a = b;
+    b = next;
+  }
+
+  return sequence;
+}
+
+function isFibonacci(num) {
+  if (num < 0) {
+    return false;
+  }
+
+  let a = 0;
+  let b = 1;
+
+  while (a <= num) {
+    if (a === num) {
+      return true;
+    }
+    const next = a + b;
+    a = b;
+    b = next;
+  }
+
+  return false;
+}
+
+function runPrintTerms() {
+  const n = readlineSync.questionInt("How many terms? ");
+
+  if (n <= 0) {
+    console.log("Error: The number of terms must be a positive integer.");
+    return;
+  }
+
+  const sequence = generateFibonacci(n);
+
+  console.log(`Fibonacci sequence: ${sequence.join(" ")}`);
+}
+
+function runCheckNumber() {
+  const num = readlineSync.questionInt("Enter a number to check: ");
+
+  if (isFibonacci(num)) {
+    console.log(`${num} is a Fibonacci number.`);
+  } else {
+    console.log(`${num} is NOT a Fibonacci number.`);
+  }
+}
+
+function main() {
+  console.log("Fibonacci Sequence Generator");
+  console.log("1. Print the First N Terms");
+  console.log("2. Check if a Number Belongs to the Sequence");
+
+  const choice = readlineSync.questionInt("Choose an option (1-2): ");
+
+  if (choice === 1) {
+    runPrintTerms();
+  } else if (choice === 2) {
+    runCheckNumber();
+  } else {
+    console.log("Error: Invalid choice.");
+  }
+}
+
+main();
